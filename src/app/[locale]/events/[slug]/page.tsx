@@ -24,9 +24,11 @@ const dateLocale: Record<AppLocale, string> = {
 export async function generateStaticParams() {
   const out: { locale: AppLocale; slug: string }[] = [];
   for (const locale of locales) {
-    const data = await hygraphFetch<SlugsData>(MARKETING_SLUGS, {
-      locales: [locale],
-    });
+    const data = await hygraphFetch<SlugsData>(
+      MARKETING_SLUGS,
+      { locales: [locale] },
+      { staticBuild: true },
+    );
     for (const p of data.marketingPages) {
       out.push({ locale, slug: p.slug });
     }

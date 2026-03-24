@@ -7,8 +7,8 @@ const heroImageFields = `
 `;
 
 export const PRODUCTS_INDEX = `
-  query ProductsIndex($locales: [Locale!]!) {
-    products(orderBy: sortOrder_ASC, locales: $locales) {
+  query ProductsIndex($locales: [Locale!]!, $stage: Stage!) {
+    products(orderBy: sortOrder_ASC, locales: $locales, stage: $stage) {
       id
       title
       slug
@@ -25,8 +25,8 @@ export const PRODUCTS_INDEX = `
 `;
 
 export const PRODUCT_BY_SLUG = `
-  query ProductBySlug($slug: String!, $locales: [Locale!]!) {
-    products(where: { slug: $slug }, first: 1, locales: $locales) {
+  query ProductBySlug($slug: String!, $locales: [Locale!]!, $stage: Stage!) {
+    products(where: { slug: $slug }, first: 1, locales: $locales, stage: $stage) {
       id
       title
       slug
@@ -62,16 +62,16 @@ export const PRODUCT_BY_SLUG = `
 `;
 
 export const PRODUCT_SLUGS = `
-  query ProductSlugs($locales: [Locale!]!) {
-    products(locales: $locales) {
+  query ProductSlugs($locales: [Locale!]!, $stage: Stage!) {
+    products(locales: $locales, stage: $stage) {
       slug
     }
   }
 `;
 
 export const FEATURED_PRODUCTS = `
-  query FeaturedProducts($locales: [Locale!]!) {
-    products(where: { isFeatured: true }, orderBy: sortOrder_ASC, locales: $locales) {
+  query FeaturedProducts($locales: [Locale!]!, $stage: Stage!) {
+    products(where: { isFeatured: true }, orderBy: sortOrder_ASC, locales: $locales, stage: $stage) {
       id
       title
       slug
@@ -87,8 +87,8 @@ export const FEATURED_PRODUCTS = `
 `;
 
 export const MARKETING_PAGES = `
-  query MarketingPages($locales: [Locale!]!) {
-    marketingPages(orderBy: eventDate_ASC, locales: $locales) {
+  query MarketingPages($locales: [Locale!]!, $stage: Stage!) {
+    marketingPages(orderBy: eventDate_ASC, locales: $locales, stage: $stage) {
       id
       title
       slug
@@ -102,8 +102,8 @@ export const MARKETING_PAGES = `
 `;
 
 export const MARKETING_BY_SLUG = `
-  query MarketingBySlug($slug: String!, $locales: [Locale!]!) {
-    marketingPages(where: { slug: $slug }, first: 1, locales: $locales) {
+  query MarketingBySlug($slug: String!, $locales: [Locale!]!, $stage: Stage!) {
+    marketingPages(where: { slug: $slug }, first: 1, locales: $locales, stage: $stage) {
       id
       title
       slug
@@ -120,8 +120,8 @@ export const MARKETING_BY_SLUG = `
 `;
 
 export const MARKETING_SLUGS = `
-  query MarketingSlugs($locales: [Locale!]!) {
-    marketingPages(locales: $locales) {
+  query MarketingSlugs($locales: [Locale!]!, $stage: Stage!) {
+    marketingPages(locales: $locales, stage: $stage) {
       slug
     }
   }

@@ -7,6 +7,7 @@ export function middleware(request: NextRequest) {
 
   if (
     pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
     pathname.startsWith("/favicon") ||
     pathname === "/favicon.ico" ||
     pathname.includes(".") // static files: *.svg, *.png, etc.
