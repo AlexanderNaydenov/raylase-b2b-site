@@ -3,42 +3,56 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductCarousel } from "@/components/ProductCarousel";
 import { RichHtml } from "@/components/RichHtml";
+import { getDictionary } from "@/lib/dictionaries";
 import { hygraphFetch } from "@/lib/hygraph";
 import { PRODUCT_BY_SLUG, PRODUCT_SLUGS } from "@/lib/queries";
+import { locales, localesForQuery, withLocale, type AppLocale } from "@/lib/locales";
 import type { ProductDetail } from "@/types/cms";
 
 type ProductSlugData = { products: { slug: string }[] };
 type ProductData = { products: ProductDetail[] };
 
+type PageProps = {
+  params: Promise<{ locale: AppLocale; slug: string }>;
+};
+
 export async function generateStaticParams() {
-  const data = await hygraphFetch<ProductSlugData>(PRODUCT_SLUGS);
-  return data.products.map((p) => ({ slug: p.slug }));
+  const out: { locale: AppLocale; slug: string }[] = [];
+  for (const locale of locales) {
+    const data = await hygraphFetch<ProductSlugData>(PRODUCT_SLUGS, {
+      locales: [locale],
+    });
+    for (const p of data.products) {
+      out.push({ locale, slug: p.slug });
+    }
+  }
+  return out;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const data = await hygraphFetch<ProductData>(PRODUCT_BY_SLUG, { slug });
+export async function generateMetadata({ params }: PageProps) {
+  const { slug, locale } = await params;
+  const data = await hygraphFetch<ProductData>(PRODUCT_BY_SLUG, {
+    slug,
+    locales: [locale],
+  });
   const p = data.products[0];
-  if (!p) return { title: "Product" };
+  const d = getDictionary(locale);
+  if (!p) return { title: d.metaProducts };
   return {
     title: p.title,
     description: p.excerpt ?? p.subtitle ?? undefined,
   };
 }
 
-export default async function ProductPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const data = await hygraphFetch<ProductData>(PRODUCT_BY_SLUG, { slug });
+export default async function ProductPage({ params }: PageProps) {
+  const { slug, locale } = await params;
+  const data = await hygraphFetch<ProductData>(PRODUCT_BY_SLUG, {
+    slug,
+    locales: localesForQuery(locale),
+  });
   const product = data.products[0];
   if (!product) notFound();
+  const d = getDictionary(locale);
 
   return (
     <article className="pb-20">
@@ -47,7 +61,7 @@ export default async function ProductPage({
           <div>
             {product.category?.name && (
               <Link
-                href="/products"
+                href={withLocale(locale, "/products")}
                 className="text-xs font-semibold uppercase tracking-wider text-[#0086b8] hover:underline"
               >
                 {product.category.name}
@@ -71,13 +85,13 @@ export default async function ProductPage({
                 rel="noreferrer"
                 className="rounded-full bg-[#0086b8] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-sky-200/50 transition hover:bg-[#0099d4]"
               >
-                Request consultation
+                {d.productRequestConsultation}
               </a>
               <Link
-                href="/products"
+                href={withLocale(locale, "/products")}
                 className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50"
               >
-                Back to catalog
+                {d.productBackToCatalog}
               </Link>
             </div>
           </div>
@@ -107,7 +121,7 @@ export default async function ProductPage({
             {product.specs && product.specs.length > 0 && (
               <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
                 <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-                  Specifications
+                  {d.productSpecs}
                 </h2>
                 <dl className="mt-4 space-y-4">
                   {product.specs.map((row) => (
@@ -129,7 +143,7 @@ export default async function ProductPage({
 
         {product.relatedProducts?.length > 0 && (
           <div className="mt-20 border-t border-slate-200 pt-16">
-            <ProductCarousel products={product.relatedProducts} />
+            <ProductCarousel products={product.relatedProducts} locale={locale} />
           </div>
         )}
       </div>

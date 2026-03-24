@@ -3,9 +3,18 @@
 import { useRef } from "react";
 import { ProductCard } from "@/components/ProductCard";
 import type { ProductCard as T } from "@/types/cms";
+import type { AppLocale } from "@/lib/locales";
+import { getDictionary } from "@/lib/dictionaries";
 
-export function ProductCarousel({ products }: { products: T[] }) {
+export function ProductCarousel({
+  products,
+  locale,
+}: {
+  products: T[];
+  locale: AppLocale;
+}) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const d = getDictionary(locale);
 
   if (!products.length) return null;
 
@@ -20,12 +29,12 @@ export function ProductCarousel({ products }: { products: T[] }) {
     <div className="relative">
       <div className="mb-4 flex items-center justify-between gap-4">
         <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
-          Related products
+          {d.relatedProducts}
         </h2>
         <div className="flex gap-2">
           <button
             type="button"
-            aria-label="Previous"
+            aria-label={d.carouselPrev}
             onClick={() => scrollBy(-1)}
             className="rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition hover:border-[#0086b8]/40 hover:text-slate-900"
           >
@@ -33,7 +42,7 @@ export function ProductCarousel({ products }: { products: T[] }) {
           </button>
           <button
             type="button"
-            aria-label="Next"
+            aria-label={d.carouselNext}
             onClick={() => scrollBy(1)}
             className="rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition hover:border-[#0086b8]/40 hover:text-slate-900"
           >
@@ -50,7 +59,7 @@ export function ProductCarousel({ products }: { products: T[] }) {
             key={p.id}
             className="w-[min(100%,280px)] shrink-0 snap-start sm:w-[300px]"
           >
-            <ProductCard product={p} />
+            <ProductCard product={p} locale={locale} />
           </div>
         ))}
       </div>

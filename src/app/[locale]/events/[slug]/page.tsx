@@ -2,44 +2,57 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { RichHtml } from "@/components/RichHtml";
+import { getDictionary, pageTypeLabel } from "@/lib/dictionaries";
 import { hygraphFetch } from "@/lib/hygraph";
 import { MARKETING_BY_SLUG, MARKETING_SLUGS } from "@/lib/queries";
+import { locales, localesForQuery, withLocale, type AppLocale } from "@/lib/locales";
 import type { MarketingPageDetail } from "@/types/cms";
 
 type SlugsData = { marketingPages: { slug: string }[] };
 type PageData = { marketingPages: MarketingPageDetail[] };
 
-const typeLabel: Record<string, string> = {
-  EVENT: "Event",
-  WEBINAR: "Webinar",
-  TRADE_SHOW: "Trade show",
-  NEWS: "News",
+type PageProps = {
+  params: Promise<{ locale: AppLocale; slug: string }>;
+};
+
+const dateLocale: Record<AppLocale, string> = {
+  en: "en-GB",
+  de: "de-DE",
+  zh: "zh-CN",
 };
 
 export async function generateStaticParams() {
-  const data = await hygraphFetch<SlugsData>(MARKETING_SLUGS);
-  return data.marketingPages.map((p) => ({ slug: p.slug }));
+  const out: { locale: AppLocale; slug: string }[] = [];
+  for (const locale of locales) {
+    const data = await hygraphFetch<SlugsData>(MARKETING_SLUGS, {
+      locales: [locale],
+    });
+    for (const p of data.marketingPages) {
+      out.push({ locale, slug: p.slug });
+    }
+  }
+  return out;
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const data = await hygraphFetch<PageData>(MARKETING_BY_SLUG, { slug });
+export async function generateMetadata({ params }: PageProps) {
+  const { slug, locale } = await params;
+  const data = await hygraphFetch<PageData>(MARKETING_BY_SLUG, {
+    slug,
+    locales: localesForQuery(locale),
+  });
   const p = data.marketingPages[0];
-  if (!p) return { title: "Event" };
+  const d = getDictionary(locale);
+  if (!p) return { title: d.metaEvents };
   return {
     title: p.title,
     description: p.excerpt ?? undefined,
   };
 }
 
-function formatDate(iso?: string | null) {
+function formatDate(locale: AppLocale, iso?: string | null) {
   if (!iso) return null;
   const d = new Date(iso);
-  return d.toLocaleString("en-GB", {
+  return d.toLocaleString(dateLocale[locale], {
     weekday: "short",
     day: "numeric",
     month: "long",
@@ -49,15 +62,15 @@ function formatDate(iso?: string | null) {
   });
 }
 
-export default async function EventDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const data = await hygraphFetch<PageData>(MARKETING_BY_SLUG, { slug });
+export default async function EventDetailPage({ params }: PageProps) {
+  const { slug, locale } = await params;
+  const data = await hygraphFetch<PageData>(MARKETING_BY_SLUG, {
+    slug,
+    locales: localesForQuery(locale),
+  });
   const page = data.marketingPages[0];
   if (!page) notFound();
+  const d = getDictionary(locale);
 
   return (
     <article>
@@ -77,13 +90,15 @@ export default async function EventDetailPage({
         )}
         <div className="relative mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
           <span className="inline-block rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-[#007aa8]">
-            {typeLabel[page.pageType] ?? page.pageType}
+            {pageTypeLabel(locale, page.pageType)}
           </span>
           <h1 className="mt-6 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
             {page.title}
           </h1>
           <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-600">
-            {formatDate(page.eventDate) && <span>{formatDate(page.eventDate)}</span>}
+            {formatDate(locale, page.eventDate) && (
+              <span>{formatDate(locale, page.eventDate)}</span>
+            )}
             {page.location && <span>· {page.location}</span>}
           </div>
           {page.excerpt && (
@@ -98,10 +113,10 @@ export default async function EventDetailPage({
         {page.body?.html && <RichHtml html={page.body.html} />}
         <div className="mt-16 border-t border-slate-200 pt-10">
           <Link
-            href="/events"
+            href={withLocale(locale, "/events")}
             className="text-sm font-medium text-[#0086b8] hover:underline"
           >
-            ← All events
+            {d.eventsBack}
           </Link>
         </div>
       </div>

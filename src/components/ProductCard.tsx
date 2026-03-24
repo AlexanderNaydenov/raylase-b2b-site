@@ -1,11 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ProductCard as T } from "@/types/cms";
+import { withLocale, type AppLocale } from "@/lib/locales";
+import { getDictionary } from "@/lib/dictionaries";
 
-export function ProductCard({ product }: { product: T }) {
+export function ProductCard({
+  product,
+  locale,
+}: {
+  product: T;
+  locale: AppLocale;
+}) {
+  const d = getDictionary(locale);
+
   return (
     <Link
-      href={`/products/${product.slug}`}
+      href={withLocale(locale, `/products/${product.slug}`)}
       className="group flex flex-col overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-sm shadow-slate-200/50 transition hover:border-[#0086b8]/35 hover:shadow-md hover:shadow-slate-300/60"
     >
       <div className="relative aspect-[4/3] bg-slate-50">
@@ -19,7 +29,7 @@ export function ProductCard({ product }: { product: T }) {
           />
         ) : (
           <div className="flex h-full items-center justify-center text-xs text-slate-400">
-            No image
+            {d.cardNoImage}
           </div>
         )}
       </div>
@@ -39,7 +49,7 @@ export function ProductCard({ product }: { product: T }) {
           <p className="line-clamp-2 text-sm text-slate-500">{product.excerpt}</p>
         )}
         <span className="mt-auto pt-2 text-sm font-medium text-[#0086b8]">
-          View details →
+          {d.cardViewDetails}
         </span>
       </div>
     </Link>
