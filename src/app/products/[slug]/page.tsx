@@ -82,9 +82,9 @@ export default async function ProductPage({
             </div>
           </div>
           <div className="relative aspect-square max-h-[420px] overflow-hidden rounded-2xl border border-white/10 bg-[#0a0e14] lg:max-h-none">
-            {product.heroImageUrl ? (
+            {product.heroImage?.url ? (
               <Image
-                src={product.heroImageUrl}
+                src={product.heroImage.url}
                 alt={product.title}
                 fill
                 className="object-contain p-4"

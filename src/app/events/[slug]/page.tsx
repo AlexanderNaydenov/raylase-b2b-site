@@ -62,10 +62,10 @@ export default async function EventDetailPage({
   return (
     <article>
       <div className="relative border-b border-white/10 bg-[#0c1219]">
-        {page.heroImageUrl && (
+        {page.heroImage?.url && (
           <div className="absolute inset-0">
             <Image
-              src={page.heroImageUrl}
+              src={page.heroImage.url}
               alt=""
               fill
               className="object-cover opacity-30"

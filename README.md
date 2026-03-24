@@ -23,8 +23,14 @@ The app defaults to the public Content API endpoint bundled for the Raylase Hygr
 ## Hygraph schema
 
 - **ProductCategory** — catalog grouping.
-- **Product** — detail page fields, `specs` (SpecLine component), `relatedProducts` (carousel), SEO component.
-- **MarketingPage** — events, webinars, trade shows, news (`MarketingPageType` enum).
+- **Product** — detail page fields, `heroImage` (relation to system **Asset**), `specs` (SpecLine component), `relatedProducts` (carousel), SEO component.
+- **MarketingPage** — events, webinars, trade shows, news (`MarketingPageType` enum), `heroImage` (Asset).
+
+Hero images are stored as Hygraph assets (CDN URLs on `graphassets.com`). Original files used for import are also kept in `public/cms-assets/` for reference.
+
+## Images
+
+`next/image` allows the Hygraph asset host and `www.raylase.de` (logo / legacy paths). Product and event pages read `heroImage.url` from the Content API.
 
 ## Branding
 

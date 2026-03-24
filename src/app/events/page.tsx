@@ -47,9 +47,9 @@ export default async function EventsPage() {
             className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0f141c] transition hover:border-[#00a3e0]/40"
           >
             <div className="relative aspect-[21/9] bg-[#0a0e14]">
-              {page.heroImageUrl ? (
+              {page.heroImage?.url ? (
                 <Image
-                  src={page.heroImageUrl}
+                  src={page.heroImage.url}
                   alt=""
                   fill
                   className="object-cover opacity-90 transition group-hover:opacity-100"

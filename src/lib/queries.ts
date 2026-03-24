@@ -1,3 +1,11 @@
+const heroImageFields = `
+  heroImage {
+    url
+    width
+    height
+  }
+`;
+
 export const PRODUCTS_INDEX = `
   query ProductsIndex {
     products(orderBy: sortOrder_ASC) {
@@ -6,7 +14,7 @@ export const PRODUCTS_INDEX = `
       slug
       subtitle
       excerpt
-      heroImageUrl
+      ${heroImageFields}
       isFeatured
       category {
         name
@@ -24,7 +32,7 @@ export const PRODUCT_BY_SLUG = `
       slug
       subtitle
       excerpt
-      heroImageUrl
+      ${heroImageFields}
       isFeatured
       category {
         name
@@ -43,7 +51,7 @@ export const PRODUCT_BY_SLUG = `
         slug
         subtitle
         excerpt
-        heroImageUrl
+        ${heroImageFields}
         category {
           name
           slug
@@ -69,7 +77,7 @@ export const FEATURED_PRODUCTS = `
       slug
       subtitle
       excerpt
-      heroImageUrl
+      ${heroImageFields}
       category {
         name
         slug
@@ -88,7 +96,7 @@ export const MARKETING_PAGES = `
       excerpt
       eventDate
       location
-      heroImageUrl
+      ${heroImageFields}
     }
   }
 `;
@@ -103,7 +111,7 @@ export const MARKETING_BY_SLUG = `
       excerpt
       eventDate
       location
-      heroImageUrl
+      ${heroImageFields}
       body {
         html
       }

@@ -9,9 +9,9 @@ export function ProductCard({ product }: { product: T }) {
       className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-[#0f141c] transition hover:border-[#00a3e0]/40 hover:shadow-lg hover:shadow-[#00a3e0]/5"
     >
       <div className="relative aspect-[4/3] bg-[#0a0e14]">
-        {product.heroImageUrl ? (
+        {product.heroImage?.url ? (
           <Image
-            src={product.heroImageUrl}
+            src={product.heroImage.url}
             alt={product.title}
             fill
             className="object-contain p-2 transition group-hover:scale-[1.02]"
