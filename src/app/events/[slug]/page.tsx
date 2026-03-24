@@ -61,33 +61,33 @@ export default async function EventDetailPage({
 
   return (
     <article>
-      <div className="relative border-b border-white/10 bg-[#0c1219]">
+      <div className="relative border-b border-slate-200 bg-gradient-to-b from-sky-50 to-[#f0f4f8]">
         {page.heroImage?.url && (
           <div className="absolute inset-0">
             <Image
               src={page.heroImage.url}
               alt=""
               fill
-              className="object-cover opacity-30"
+              className="object-cover opacity-25"
               priority
               sizes="100vw"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e14]/80 via-[#0a0e14] to-[#0a0e14]" />
+            <div className="absolute inset-0 bg-gradient-to-b from-white/85 via-[#f0f4f8]/95 to-[#f0f4f8]" />
           </div>
         )}
         <div className="relative mx-auto max-w-3xl px-4 py-16 sm:px-6 sm:py-24">
-          <span className="inline-block rounded-full bg-[#00a3e0]/20 px-3 py-1 text-xs font-semibold text-[#33b5e6]">
+          <span className="inline-block rounded-full bg-sky-100 px-3 py-1 text-xs font-semibold text-[#007aa8]">
             {typeLabel[page.pageType] ?? page.pageType}
           </span>
-          <h1 className="mt-6 text-3xl font-bold leading-tight text-white sm:text-4xl">
+          <h1 className="mt-6 text-3xl font-bold leading-tight text-slate-900 sm:text-4xl">
             {page.title}
           </h1>
-          <div className="mt-6 flex flex-wrap gap-4 text-sm text-zinc-400">
+          <div className="mt-6 flex flex-wrap gap-4 text-sm text-slate-600">
             {formatDate(page.eventDate) && <span>{formatDate(page.eventDate)}</span>}
             {page.location && <span>· {page.location}</span>}
           </div>
           {page.excerpt && (
-            <p className="mt-8 text-lg leading-relaxed text-zinc-300">
+            <p className="mt-8 text-lg leading-relaxed text-slate-700">
               {page.excerpt}
             </p>
           )}
@@ -96,10 +96,10 @@ export default async function EventDetailPage({
 
       <div className="mx-auto max-w-3xl px-4 py-14 sm:px-6">
         {page.body?.html && <RichHtml html={page.body.html} />}
-        <div className="mt-16 border-t border-white/10 pt-10">
+        <div className="mt-16 border-t border-slate-200 pt-10">
           <Link
             href="/events"
-            className="text-sm font-medium text-[#00a3e0] hover:underline"
+            className="text-sm font-medium text-[#0086b8] hover:underline"
           >
             ← All events
           </Link>

@@ -9,7 +9,7 @@ export function RichHtml({ html, className = "", ...rest }: Props) {
   return (
     <div
       {...rest}
-      className={`rich-html max-w-none text-zinc-400 [&_a]:text-[#00a3e0] [&_a]:underline-offset-2 hover:[&_a]:underline [&_p]:mb-4 [&_p]:leading-relaxed [&_p:last-child]:mb-0 ${className}`}
+      className={`rich-html max-w-none text-slate-600 [&_a]:text-[#0086b8] [&_a]:underline-offset-2 hover:[&_a]:underline [&_p]:mb-4 [&_p]:leading-relaxed [&_p:last-child]:mb-0 ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

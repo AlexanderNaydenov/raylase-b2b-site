@@ -19,7 +19,7 @@ export function ProductCarousel({ products }: { products: T[] }) {
   return (
     <div className="relative">
       <div className="mb-4 flex items-center justify-between gap-4">
-        <h2 className="text-xl font-semibold text-white sm:text-2xl">
+        <h2 className="text-xl font-semibold text-slate-900 sm:text-2xl">
           Related products
         </h2>
         <div className="flex gap-2">
@@ -27,7 +27,7 @@ export function ProductCarousel({ products }: { products: T[] }) {
             type="button"
             aria-label="Previous"
             onClick={() => scrollBy(-1)}
-            className="rounded border border-white/15 bg-[#0f141c] px-3 py-2 text-sm text-zinc-200 transition hover:border-[#00a3e0]/50 hover:text-white"
+            className="rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition hover:border-[#0086b8]/40 hover:text-slate-900"
           >
             ←
           </button>
@@ -35,7 +35,7 @@ export function ProductCarousel({ products }: { products: T[] }) {
             type="button"
             aria-label="Next"
             onClick={() => scrollBy(1)}
-            className="rounded border border-white/15 bg-[#0f141c] px-3 py-2 text-sm text-zinc-200 transition hover:border-[#00a3e0]/50 hover:text-white"
+            className="rounded border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm transition hover:border-[#0086b8]/40 hover:text-slate-900"
           >
             →
           </button>

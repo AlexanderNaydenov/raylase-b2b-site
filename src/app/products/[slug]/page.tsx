@@ -42,25 +42,25 @@ export default async function ProductPage({
 
   return (
     <article className="pb-20">
-      <div className="border-b border-white/10 bg-[#0c1219]">
+      <div className="border-b border-slate-200 bg-gradient-to-b from-sky-50/90 to-[#f0f4f8]">
         <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 lg:grid-cols-2 lg:items-center sm:px-6">
           <div>
             {product.category?.name && (
               <Link
                 href="/products"
-                className="text-xs font-semibold uppercase tracking-wider text-[#00a3e0] hover:underline"
+                className="text-xs font-semibold uppercase tracking-wider text-[#0086b8] hover:underline"
               >
                 {product.category.name}
               </Link>
             )}
-            <h1 className="mt-2 text-3xl font-bold text-white sm:text-4xl">
+            <h1 className="mt-2 text-3xl font-bold text-slate-900 sm:text-4xl">
               {product.title}
             </h1>
             {product.subtitle && (
-              <p className="mt-3 text-lg text-[#33b5e6]">{product.subtitle}</p>
+              <p className="mt-3 text-lg text-[#007aa8]">{product.subtitle}</p>
             )}
             {product.excerpt && (
-              <p className="mt-6 text-lg leading-relaxed text-zinc-400">
+              <p className="mt-6 text-lg leading-relaxed text-slate-600">
                 {product.excerpt}
               </p>
             )}
@@ -69,19 +69,19 @@ export default async function ProductPage({
                 href="https://www.raylase.de/de/kontakt.html"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-full bg-[#00a3e0] px-6 py-3 text-sm font-semibold text-[#0a0e14] transition hover:bg-[#33b5e6]"
+                className="rounded-full bg-[#0086b8] px-6 py-3 text-sm font-semibold text-white shadow-md shadow-sky-200/50 transition hover:bg-[#0099d4]"
               >
                 Request consultation
               </a>
               <Link
                 href="/products"
-                className="rounded-full border border-white/20 px-6 py-3 text-sm font-semibold text-white hover:bg-white/5"
+                className="rounded-full border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50"
               >
                 Back to catalog
               </Link>
             </div>
           </div>
-          <div className="relative aspect-square max-h-[420px] overflow-hidden rounded-2xl border border-white/10 bg-[#0a0e14] lg:max-h-none">
+          <div className="relative aspect-square max-h-[420px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-md shadow-slate-200/60 lg:max-h-none">
             {product.heroImage?.url ? (
               <Image
                 src={product.heroImage.url}
@@ -105,20 +105,20 @@ export default async function ProductPage({
           </div>
           <aside className="lg:col-span-1">
             {product.specs && product.specs.length > 0 && (
-              <div className="rounded-xl border border-white/10 bg-[#0f141c] p-6">
-                <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-500">
+              <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h2 className="text-sm font-semibold uppercase tracking-wider text-slate-500">
                   Specifications
                 </h2>
                 <dl className="mt-4 space-y-4">
                   {product.specs.map((row) => (
                     <div
                       key={`${row.label}-${row.value}`}
-                      className="border-b border-white/5 pb-4 last:border-0 last:pb-0"
+                      className="border-b border-slate-100 pb-4 last:border-0 last:pb-0"
                     >
-                      <dt className="text-xs font-medium uppercase tracking-wide text-zinc-500">
+                      <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">
                         {row.label}
                       </dt>
-                      <dd className="mt-1 text-sm text-zinc-200">{row.value}</dd>
+                      <dd className="mt-1 text-sm text-slate-800">{row.value}</dd>
                     </div>
                   ))}
                 </dl>
@@ -128,7 +128,7 @@ export default async function ProductPage({
         </div>
 
         {product.relatedProducts?.length > 0 && (
-          <div className="mt-20 border-t border-white/10 pt-16">
+          <div className="mt-20 border-t border-slate-200 pt-16">
             <ProductCarousel products={product.relatedProducts} />
           </div>
         )}

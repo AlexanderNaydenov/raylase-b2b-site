@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} h-full antialiased`}>
       <body
-        className={`${dmSans.className} min-h-full flex flex-col bg-[#0a0e14] text-zinc-200`}
+        className={`${dmSans.className} min-h-full flex flex-col bg-[#f0f4f8] text-slate-900`}
       >
         <Header />
         <main className="flex-1">{children}</main>

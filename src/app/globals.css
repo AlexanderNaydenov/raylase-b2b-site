@@ -1,10 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --raylase-bg: #0a0e14;
-  --raylase-surface: #0f141c;
-  --raylase-accent: #00a3e0;
-  --raylase-accent-soft: #33b5e6;
+  --raylase-bg: #f0f4f8;
+  --raylase-surface: #ffffff;
+  --raylase-muted: #e2e8f0;
+  --raylase-accent: #0086b8;
+  --raylase-accent-hover: #0099d4;
+  --raylase-text: #0f172a;
+  --raylase-text-muted: #475569;
 }
 
 @theme inline {
